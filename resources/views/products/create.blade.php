@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h2>Create Product</h2>
+            <h2>Add new product</h2>
         </div>
         <div class="card-body">
             <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
@@ -58,7 +58,7 @@
 
                 <div class="mb-3">
                     <a href="{{ route('products.index') }}" class="btn btn-secondary">Back</a>
-                    <button type="submit" class="btn btn-primary">Create Product</button>
+                    <button type="submit" class="btn btn-primary">Add product</button>
                 </div>
             </form>
         </div>
