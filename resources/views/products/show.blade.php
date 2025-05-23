@@ -35,10 +35,10 @@
                 <strong>Product Image:</strong>
                 @if($product->image)
                     <div class="mt-2">
-                        <img src="{{ asset($product->image) }}" alt="Product Image" class="img-thumbnail" style="max-width: 300px;">
+                        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" width="200">
                     </div>
                 @else
-                    <p class="text-muted">No image available</p>
+                    <p>No Image</p>
                 @endif
             </div>
 
@@ -53,4 +53,4 @@
             </div>
         </div>
     </div>
-@endsection 
+@endsection

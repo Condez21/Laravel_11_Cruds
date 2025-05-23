@@ -50,9 +50,9 @@
 
                 <div class="mb-3">
                     <label for="image" class="form-label">Product Image</label>
-                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
+                    <input type="file" name="image" class="form-control" accept=".jpeg,.jpg,.png">
                     @error('image')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="text-danger mt-1">{{ $message }}</div>
                     @enderror
                 </div>
 
@@ -63,4 +63,4 @@
             </form>
         </div>
     </div>
-@endsection 
+@endsection

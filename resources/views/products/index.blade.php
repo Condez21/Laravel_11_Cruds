@@ -10,31 +10,34 @@ Product</a>
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Code</th>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th class="text-center">Actions</th>
+                    <th scope="col">S#</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($products as $product)
                     <tr>
+                        <th scope="row">{{ $loop->iteration}}</th>
                         <td>{{ $product->code }}</td>
-                        <td>
+                        <td class="text-center">
                             @if($product->image)
-                                <img src="{{ asset($product->image) }}" alt="Product Image" class="img-thumbnail" style="max-width: 50px;">
+                                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" width="80">
                             @else
-                                <span class="text-muted">No image</span>
+                                No Image
                             @endif
                         </td>
+                        
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->quantity }}</td>
                         <td>${{ number_format($product->price, 2) }}</td>
                         <td class="text-center">
-                            <a href="{{ route('products.show', $product) }}" class="btn btn-info btn-sm mx-1">View</a>
-                            <a href="{{ route('products.edit', $product) }}" class="btn btn-warning btn-sm mx-1">Edit</a>
+                            <a href="{{ route('products.show', $product) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a>
+                            <a href="{{ route('products.edit', $product) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
                             <form action="{{ route('products.destroy', $product) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
@@ -48,4 +51,4 @@ Product</a>
     </div>
 
     {{ $products->links() }}
-@endsection 
+@endsection

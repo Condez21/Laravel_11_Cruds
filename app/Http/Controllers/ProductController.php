@@ -38,14 +38,12 @@ class ProductController extends Controller
             'quantity' => 'required|integer',
             'price' => 'required|numeric',
             'description' => 'nullable',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048' // Restrict to jpeg, png, jpg only
         ]);
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/products'), $imageName);
-            $validated['image'] = 'images/products/' . $imageName;
+            $imagePath = $request->file('image')->store('products', 'public');
+            $validated['image'] = 'storage/' . $imagePath;
         }
 
         Product::create($validated);
@@ -81,19 +79,20 @@ class ProductController extends Controller
             'quantity' => 'required|integer',
             'price' => 'required|numeric',
             'description' => 'nullable',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($product->image && file_exists(public_path($product->image))) {
-                unlink(public_path($product->image));
+            if ($product->image) {
+                $oldImagePath = str_replace('storage/', '', $product->image);
+                $oldImageFullPath = storage_path('app/public/' . $oldImagePath);
+                if (file_exists($oldImageFullPath)) {
+                    unlink($oldImageFullPath);
+                }
             }
-            
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/products'), $imageName);
-            $validated['image'] = 'images/products/' . $imageName;
+
+            $imagePath = $request->file('image')->store('products', 'public');
+            $validated['image'] = 'storage/' . $imagePath;
         }
 
         $product->update($validated);
